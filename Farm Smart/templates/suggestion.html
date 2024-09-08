@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Data Input</title>
+    <style>
+        /* Base Styles */
+        body {
+           
+            font-family: Arial, sans-serif;
+            background: url('static/farmbg2.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+    padding: 0;
+    height: 100vh; /* Ensure body takes the full height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+        }
+
+        header {
+            width: 100%;
+            background-color: rgba(0, 128, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #333;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            color: #89f067;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        /* Title & Motto */
+        .title-container {
+            text-align: center;
+            margin-top: 250px;
+            background-color: #3333333a;
+        }
+
+        .title-container h1 {
+            
+            font-size: 48px;
+            color: #530bf0;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+
+        .title-container p {
+            font-size: 20px;
+            color: #fff;
+            font-style: italic;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Form Container */
+        .form-container {
+    width: 450px;
+    padding: 30px;
+    background: rgba(178, 154, 225, 0.258);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 100px; /* Added some margin to avoid overlap with the navbar */
+}
+
+        .form-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        /* Form Inputs */
+        .form-container input[type="text"],
+        .form-container input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid rgba(240, 218, 218, 0.861);
+            border-radius: 25px;
+            background: rgba(19, 1, 1, 0.687);
+            color: #efd7d7;
+            outline: none;
+            transition: background 0.3s ease, border 0.3s ease;
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="number"]:focus {
+            background: rgba(239, 232, 232, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Submit Button */
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(45deg, #32cd32, #00fa9a);
+            border: none;
+            color: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(45deg, #00fa9a, #32cd32);
+            box-shadow: 0 6px 20px rgba(0, 255, 127, 0.4);
+            transform: scale(1.05);
+        }
+         /* Footer */
+        footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/quiz">Quiz</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Title and Motto -->
+    <div class="title-container">
+        <h1>Welcome To Farm Data Input</h1>
+        <p>Your Gateway to Smart Agriculture</p>
+    </div>
+
+    <!-- Form -->
+    <div class="form-container">
+        <h2>Enter Farm Data</h2>
+        <form action="/submit" method="POST">
+            <input type="number" name="nitrogen" placeholder="Nitrogen (N)" required>
+            <input type="number" name="phosphorus" placeholder="Phosphorus (P)" required>
+            <input type="number" name="potassium" placeholder="Potassium (K)" required>
+            <input type="text" name="temperature" placeholder="Temperature (°C)" required>
+            <input type="text" name="humidity" placeholder="Humidity (%)" required>
+            <input type="text" name="ph" placeholder="pH" required>
+            <input type="text" name="rainfall" placeholder="Rainfall (mm)" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+     
+</body>
+
+</html>

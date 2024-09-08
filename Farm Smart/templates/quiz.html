@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page – Farm Smart</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #FF6F61, #FFD700);
+            color: #333;
+            overflow:auto;
+        }
+        /* Navigation Bar */
+        .navbar {
+            background-color: #333;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            color: #89f067;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #eace169d;
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            margin-top: 4rem;
+        }
+
+        .motto {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .quiz-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            width: 250px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .quiz-box h2 {
+            margin: 0;
+            color: #4CAF50;
+        }
+
+        .quiz-box p {
+            margin: 1rem 0;
+            color: #666;
+        }
+
+        .quiz-box button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .quiz-box button:hover {
+            background-color: #66BB6A;
+        }
+
+        .quiz-box.active {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        .quiz-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+            position: relative;
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-timer {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-options input {
+            margin-right: 0.5rem;
+        }
+
+        .quiz-submit {
+            margin-top: 1.5rem;
+            padding: 0.5rem 2rem;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .quiz-submit:hover {
+            background-color: #66BB6A;
+        }
+
+        .result-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            animation: fade-in 1s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        footer {
+            
+            background-color: #333;
+            color: #fff;
+            padding: 3rem;
+            text-align: center;
+            
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Section -->
+    <h1>Farm Smart Quiz</h1>
+    <div class="motto">Test Your Knowledge and Skills with Fun Quizzes!</div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container">
+        <!-- Quiz Boxes -->
+        <div class="quiz-box" onclick="startQuiz('harvesting')">
+            <h2>Harvesting Learning Quiz</h2>
+            <p>Learn about different harvesting techniques and their advantages.</p>
+            <button>Start Quiz</button>
+        </div>
+
+        <div class="quiz-box" onclick="startQuiz('fields')">
+            <h2>Fields Understanding Quiz</h2>
+            <p>Understand different fields of crops and their characteristics.</p>
+            <button>Start Quiz</button>
+        </div>
+
+        <div class="quiz-box" onclick="startQuiz('tools')">
+            <h2>Agriculture Tools Requirement Quiz</h2>
+            <p>Identify tools and guess their uses in agriculture.</p>
+            <button>Start Quiz</button>
+        </div>
+
+        <div class="quiz-box" onclick="startQuiz('weather')">
+            <h2>Guess Crop by Weather Quiz</h2>
+            <p>Match crops with their harvest times based on weather conditions.</p>
+            <button>Start Quiz</button>
+        </div>
+
+        <div class="quiz-box" onclick="startQuiz('soil')">
+            <h2>Soil and crop Quiz</h2>
+            <p>Understanding about Soil and their properties , See which crop is suitable to given soil type.</p>
+            <button>Start Quiz</button>
+        </div>
+
+        <div class="quiz-box" onclick="startQuiz('session')">
+            <h2>Session Graining Quiz</h2>
+            <p>Select the crops that can be harvested in different weather conditions.</p>
+            <button>Start Quiz</button>
+        </div>
+    </div>
+
+    <!-- Quiz Content Templates -->
+    <div class="quiz-content" id="harvesting-quiz">
+        <div class="quiz-timer" id="harvesting-timer">Time Left: <span id="harvesting-time">120</span> seconds</div>
+        <form id="harvesting-form">
+            <!-- Quiz Questions -->
+            <div class="quiz-question">
+                <div class="quiz-div" id="harvesting-quiz">
+                    <h3>Harvesting Learning Quiz</h3>
+                    <form id="harvesting-form">
+                        <p>1. What is the best time for harvesting wheat?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q1" value="A"> A. Winter</li>
+                            <li><input type="radio" name="q1" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q1" value="C"> C. Spring</li>
+                            <li><input type="radio" name="q1" value="D"> D. Autumn</li>
+                        </ul>
+                        
+                        <p>2. When is the best time to harvest corn?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q2" value="A"> A. Spring</li>
+                            <li><input type="radio" name="q2" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q2" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q2" value="D"> D. Winter</li>
+                        </ul>
+                        
+                        <p>3. Which season is ideal for harvesting barley?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q3" value="A"> A. Winter</li>
+                            <li><input type="radio" name="q3" value="B"> B. Spring</li>
+                            <li><input type="radio" name="q3" value="C"> C. Summer</li>
+                            <li><input type="radio" name="q3" value="D"> D. Autumn</li>
+                        </ul>
+                        
+                        <p>4. What is the optimal time for harvesting oats?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q4" value="A"> A. Spring</li>
+                            <li><input type="radio" name="q4" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q4" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q4" value="D"> D. Winter</li>
+                        </ul>
+                        
+                        <p>5. When should rice be harvested?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q5" value="A"> A. Winter</li>
+                            <li><input type="radio" name="q5" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q5" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q5" value="D"> D. Spring</li>
+                        </ul>
+                        
+                        <p>6. Which season is best for harvesting soybeans?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q6" value="A"> A. Summer</li>
+                            <li><input type="radio" name="q6" value="B"> B. Autumn</li>
+                            <li><input type="radio" name="q6" value="C"> C. Winter</li>
+                            <li><input type="radio" name="q6" value="D"> D. Spring</li>
+                        </ul>
+                        
+                        <p>7. When is the ideal time for harvesting potatoes?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q7" value="A"> A. Spring</li>
+                            <li><input type="radio" name="q7" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q7" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q7" value="D"> D. Winter</li>
+                        </ul>
+                        
+                        <p>8. What is the recommended time for harvesting peanuts?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q8" value="A"> A. Spring</li>
+                            <li><input type="radio" name="q8" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q8" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q8" value="D"> D. Winter</li>
+                        </ul>
+                        
+                        <p>9. When should sunflower be harvested?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q9" value="A"> A. Spring</li>
+                            <li><input type="radio" name="q9" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q9" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q9" value="D"> D. Winter</li>
+                        </ul>
+                        
+                        <p>10. What is the best time to harvest grapes?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q10" value="A"> A. Spring</li>
+                            <li><input type="radio" name="q10" value="B"> B. Summer</li>
+                            <li><input type="radio" name="q10" value="C"> C. Autumn</li>
+                            <li><input type="radio" name="q10" value="D"> D. Winter</li>
+                        </ul>
+                        
+                    </form>
+                </div>
+                
+            </div>
+            <!-- Add 9 more questions similarly -->
+            <button type="button" class="quiz-submit" onclick="submitQuiz('harvesting')">Submit Quiz</button>
+        </form>
+    </div>
+
+
+    <div class="quiz-content" id="fields-quiz">
+        <div class="quiz-timer" id="fields-timer">Time Left: <span id="fields-time">120</span> seconds</div>
+        <form id="fields-form">
+            <!-- Quiz Questions -->
+            <div class="quiz-question">
+                <div class = "quiz_div" id="fields-quiz">
+                    <h3>Fields quiz</h3>
+                    <form id="fields-quiz">
+                        <p>1. What is the main purpose of crop rotation?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q1" value="A"> A. Improve Soil Health</li>
+                            <li><input type="radio" name="q1" value="B"> B. Increase Crop Yield</li>
+                            <li><input type="radio" name="q1" value="C"> C. Reduce Pest Infestation</li>
+                            <li><input type="radio" name="q1" value="D"> D. All of the Above</li>
+                        </ul>
+            
+                        <p>2. What is a key benefit of planting cover crops?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q2" value="A"> A. Weed Suppression</li>
+                            <li><input type="radio" name="q2" value="B"> B. Soil Erosion Prevention</li>
+                            <li><input type="radio" name="q2" value="C"> C. Enhanced Soil Fertility</li>
+                            <li><input type="radio" name="q2" value="D"> D. All of the Above</li>
+                        </ul>
+            
+                        <p>3. What type of soil is best suited for root vegetables?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q3" value="A"> A. Sandy Soil</li>
+                            <li><input type="radio" name="q3" value="B"> B. Clay Soil</li>
+                            <li><input type="radio" name="q3" value="C"> C. Loamy Soil</li>
+                            <li><input type="radio" name="q3" value="D"> D. Peaty Soil</li>
+                        </ul>
+            
+                        <p>4. Which crop is typically grown in temperate regions?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q4" value="A"> A. Rice</li>
+                            <li><input type="radio" name="q4" value="B"> B. Wheat</li>
+                            <li><input type="radio" name="q4" value="C"> C. Sugarcane</li>
+                            <li><input type="radio" name="q4" value="D"> D. Banana</li>
+                        </ul>
+            
+                        <p>5. What is the primary function of legumes in crop rotation?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q5" value="A"> A. Nitrogen Fixation</li>
+                            <li><input type="radio" name="q5" value="B"> B. Pest Control</li>
+                            <li><input type="radio" name="q5" value="C"> C. Soil Erosion</li>
+                            <li><input type="radio" name="q5" value="D"> D. Water Conservation</li>
+                        </ul>
+            
+                        <p>6. What is a common method for soil testing?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q6" value="A"> A. Soil Sampling</li>
+                            <li><input type="radio" name="q6" value="B"> B. Soil Plowing</li>
+                            <li><input type="radio" name="q6" value="C"> C. Soil Aeration</li>
+                            <li><input type="radio" name="q6" value="D"> D. Soil Erosion</li>
+                        </ul>
+            
+                        <p>7. What crop is known for its drought resistance?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q7" value="A"> A. Corn</li>
+                            <li><input type="radio" name="q7" value="B"> B. Sorghum</li>
+                            <li><input type="radio" name="q7" value="C"> C. Rice</li>
+                            <li><input type="radio" name="q7" value="D"> D. Cotton</li>
+                        </ul>
+            
+                        <p>8. Which crop requires the most water for growth?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q8" value="A"> A. Barley</li>
+                            <li><input type="radio" name="q8" value="B"> B. Wheat</li>
+                            <li><input type="radio" name="q8" value="C"> C. Rice</li>
+                            <li><input type="radio" name="q8" value="D"> D. Soybeans</li>
+                        </ul>
+            
+                        <p>9. What is the purpose of green manure crops?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q9" value="A"> A. Weed Control</li>
+                            <li><input type="radio" name="q9" value="B"> B. Soil Fertility Improvement</li>
+                            <li><input type="radio" name="q9" value="C"> C. Soil Erosion</li>
+                            <li><input type="radio" name="q9" value="D"> D. Pest Control</li>
+                        </ul>
+            
+                        <p>10. What is a common pest found in cornfields?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q10" value="A"> A. Aphids</li>
+                            <li><input type="radio" name="q10" value="B"> B. Corn Borers</li>
+                            <li><input type="radio" name="q10" value="C"> C. Spider Mites</li>
+                            <li><input type="radio" name="q10" value="D"> D. Leafhoppers</li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            
+            <button type="button" class="quiz-submit" onclick="submitQuiz('fields')">Submit Quiz</button>
+        </form>
+    </div>
+
+    <div class="quiz-content" id="tools-quiz">
+        <div class="quiz-timer" id="tools-timer">Time Left: <span id="tools-time">120</span> seconds</div>
+        <form id="tools-form">
+            <!-- Quiz Questions -->
+            <div class="quiz-question">
+                <div class = "quiz_div" id="tools-quiz">
+                    <h3>Tools quiz</h3>
+                    <form id="tools-quiz">
+                        <p>1. What tool is used to plow soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q1" value="A"> A. Harrow</li>
+                            <li><input type="radio" name="q1" value="B"> B. Tiller</li>
+                            <li><input type="radio" name="q1" value="C"> C. Seeder</li>
+                            <li><input type="radio" name="q1" value="D"> D. Cultivator</li>
+                        </ul>
+            
+                        <p>2. Which tool is used to spread fertilizer?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q2" value="A"> A. Seeder</li>
+                            <li><input type="radio" name="q2" value="B"> B. Fertilizer Spreader</li>
+                            <li><input type="radio" name="q2" value="C"> C. Plow</li>
+                            <li><input type="radio" name="q2" value="D"> D. Harrow</li>
+                        </ul>
+            
+                        <p>3. What is the purpose of a combine harvester?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q3" value="A"> A. Plowing Soil</li>
+                            <li><input type="radio" name="q3" value="B"> B. Harvesting Crops</li>
+                            <li><input type="radio" name="q3" value="C"> C. Spreading Fertilizer</li>
+                            <li><input type="radio" name="q3" value="D"> D. Irrigation</li>
+                        </ul>
+            
+                        <p>4. Which tool is used to plant seeds in rows?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q4" value="A"> A. Planter</li>
+                            <li><input type="radio" name="q4" value="B"> B. Cultivator</li>
+                            <li><input type="radio" name="q4" value="C"> C. Harrow</li>
+                            <li><input type="radio" name="q4" value="D"> D. Tiller</li>
+                        </ul>
+            
+                        <p>5. What tool is used for irrigation?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q5" value="A"> A. Irrigation System</li>
+                            <li><input type="radio" name="q5" value="B"> B. Seeder</li>
+                            <li><input type="radio" name="q5" value="C"> C. Plow</li>
+                            <li><input type="radio" name="q5" value="D"> D. Combine Harvester</li>
+                        </ul>
+            
+                        <p>6. What is the function of a soil moisture meter?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q6" value="A"> A. Measure Soil pH</li>
+                            <li><input type="radio" name="q6" value="B"> B. Measure Soil Moisture</li>
+                            <li><input type="radio" name="q6" value="C"> C. Measure Soil Temperature</li>
+                            <li><input type="radio" name="q6" value="D"> D. Measure Soil Nutrients</li>
+                        </ul>
+            
+                        <p>7. Which tool is used for removing weeds?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q7" value="A"> A. Weeder</li>
+                            <li><input type="radio" name="q7" value="B"> B. Harrow</li>
+                            <li><input type="radio" name="q7" value="C"> C. Cultivator</li>
+                            <li><input type="radio" name="q7" value="D"> D. Seeder</li>
+                        </ul>
+            
+                        <p>8. What tool is commonly used for harvesting vegetables?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q8" value="A"> A. Hoe</li>
+                            <li><input type="radio" name="q8" value="B"> B. Combine Harvester</li>
+                            <li><input type="radio" name="q8" value="C"> C. Tiller</li>
+                            <li><input type="radio" name="q8" value="D"> D. Planter</li>
+                        </ul>
+            
+                        <p>9. What is the purpose of a rotary tiller?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q9" value="A"> A. Soil Preparation</li>
+                            <li><input type="radio" name="q9" value="B"> B. Harvesting</li>
+                            <li><input type="radio" name="q9" value="C"> C. Irrigation</li>
+                            <li><input type="radio" name="q9" value="D"> D. Fertilizing</li>
+                        </ul>
+            
+                        <p>10. What tool is used for planting small seeds?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q10" value="A"> A. Seeder</li>
+                            <li><input type="radio" name="q10" value="B"> B. Plow</li>
+                            <li><input type="radio" name="q10" value="C"> C. Cultivator</li>
+                            <li><input type="radio" name="q10" value="D"> D. Harrow</li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+          
+            <button type="button" class="quiz-submit" onclick="submitQuiz('tools')">Submit Quiz</button>
+        </form>
+    </div>
+
+            
+    <div class="quiz-content" id="weather-quiz">
+        <div class="quiz-timer" id="weather-timer">Time Left: <span id="weather-time">120</span> seconds</div>
+        <form id="weather-form">
+            <!-- Quiz Questions -->
+            <div class="quiz-question">
+                <div class = "quiz_div" id="weather-quiz">
+                    <h3>Weather quiz</h3>
+                    <form id="weather-quiz">
+
+                        <p>1. What crop is best suited for high rainfall regions?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q1" value="A"> A. Rice</li>
+                            <li><input type="radio" name="q1" value="B"> B. Wheat</li>
+                            <li><input type="radio" name="q1" value="C"> C. Barley</li>
+                            <li><input type="radio" name="q1" value="D"> D. Corn</li>
+                        </ul>
+            
+                        <p>2. Which crop thrives in dry, arid conditions?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q2" value="A"> A. Cotton</li>
+                            <li><input type="radio" name="q2" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q2" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q2" value="D"> D. Oats</li>
+                        </ul>
+            
+                        <p>3. What crop is ideal for moderate rainfall and cooler temperatures?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q3" value="A"> A. Potatoes</li>
+                            <li><input type="radio" name="q3" value="B"> B. Maize</li>
+                            <li><input type="radio" name="q3" value="C"> C. Rice</li>
+                            <li><input type="radio" name="q3" value="D"> D. Sugarcane</li>
+                        </ul>
+            
+                        <p>4. Which crop is suitable for areas with high humidity?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q4" value="A"> A. Wheat</li>
+                            <li><input type="radio" name="q4" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q4" value="C"> C. Corn</li>
+                            <li><input type="radio" name="q4" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>5. What crop would be suitable for a region with heavy frost?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q5" value="A"> A. Peas</li>
+                            <li><input type="radio" name="q5" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q5" value="C"> C. Rice</li>
+                            <li><input type="radio" name="q5" value="D"> D. Sugarcane</li>
+                        </ul>
+            
+                        <p>6. Which crop performs well in sunny, warm climates?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q6" value="A"> A. Sunflowers</li>
+                            <li><input type="radio" name="q6" value="B"> B. Barley</li>
+                            <li><input type="radio" name="q6" value="C"> C. Oats</li>
+                            <li><input type="radio" name="q6" value="D"> D. Rice</li>
+                        </ul>
+            
+                        <p>7. What crop is suited for regions with poor soil quality?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q7" value="A"> A. Alfalfa</li>
+                            <li><input type="radio" name="q7" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q7" value="C"> C. Wheat</li>
+                            <li><input type="radio" name="q7" value="D"> D. Soybean</li>
+                        </ul>
+            
+                        <p>8. Which crop grows well in sandy soils?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q8" value="A"> A. Carrots</li>
+                            <li><input type="radio" name="q8" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q8" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q8" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>9. What is the best crop for clayey soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q9" value="A"> A. Potatoes</li>
+                            <li><input type="radio" name="q9" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q9" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q9" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>10. Which crop is best suited for regions with a short growing season?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q10" value="A"> A. Radishes</li>
+                            <li><input type="radio" name="q10" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q10" value="C"> C. Corn</li>
+                            <li><input type="radio" name="q10" value="D"> D. Sugarcane</li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            <button type="button" class="quiz-submit" onclick="submitQuiz('weather')">Submit Quiz</button>
+        </from>
+    </div>
+            
+    <div class="quiz-content" id="soil-quiz">
+        <div class="quiz-timer" id="soil-timer">Time Left: <span id="soil-time">120</span> seconds</div>
+        <form id="soil-form">
+            <!-- Quiz Questions -->
+            <div class="quiz-question">
+                <div class = "quiz_div" id="soil-quiz">
+                    <h3>Soil quiz</h3>
+                    <form id="soil-quiz">
+                        <p>1. Which crop is best suited for loamy soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q1" value="A"> A. Wheat</li>
+                            <li><input type="radio" name="q1" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q1" value="C"> C. Barley</li>
+                            <li><input type="radio" name="q1" value="D"> D. Soybean</li>
+                        </ul>
+            
+                        <p>2. What crop thrives in sandy soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q2" value="A"> A. Carrots</li>
+                            <li><input type="radio" name="q2" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q2" value="C"> C. Corn</li>
+                            <li><input type="radio" name="q2" value="D"> D. Potatoes</li>
+                        </ul>
+            
+                        <p>3. Which crop is best for clayey soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q3" value="A"> A. Potatoes</li>
+                            <li><input type="radio" name="q3" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q3" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q3" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>4. What crop is suitable for acidic soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q4" value="A"> A. Blueberries</li>
+                            <li><input type="radio" name="q4" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q4" value="C"> C. Wheat</li>
+                            <li><input type="radio" name="q4" value="D"> D. Soybean</li>
+                        </ul>
+            
+                        <p>5. Which crop is ideal for alkaline soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q5" value="A"> A. Spinach</li>
+                            <li><input type="radio" name="q5" value="B"> B. Barley</li>
+                            <li><input type="radio" name="q5" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q5" value="D"> D. Rice</li>
+                        </ul>
+            
+                        <p>6. What crop is suitable for well-drained soil?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q6" value="A"> A. Carrots</li>
+                            <li><input type="radio" name="q6" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q6" value="C"> C. Potatoes</li>
+                            <li><input type="radio" name="q6" value="D"> D. Soybean</li>
+                        </ul>
+            
+                        <p>7. Which crop grows well in soil with high organic content?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q7" value="A"> A. Potatoes</li>
+                            <li><input type="radio" name="q7" value="B"> B. Wheat</li>
+                            <li><input type="radio" name="q7" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q7" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>8. What crop is suitable for soil with low fertility?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q8" value="A"> A. Alfalfa</li>
+                            <li><input type="radio" name="q8" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q8" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q8" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>9. What crop is best suited for soil with high moisture?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q9" value="A"> A. Rice</li>
+                            <li><input type="radio" name="q9" value="B"> B. Corn</li>
+                            <li><input type="radio" name="q9" value="C"> C. Soybean</li>
+                            <li><input type="radio" name="q9" value="D"> D. Barley</li>
+                        </ul>
+            
+                        <p>10. Which crop grows well in soil with high salinity?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q10" value="A"> A. Barley</li>
+                            <li><input type="radio" name="q10" value="B"> B. Rice</li>
+                            <li><input type="radio" name="q10" value="C"> C. Corn</li>
+                            <li><input type="radio" name="q10" value="D"> D. Soybean</li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            <button type="button" class="quiz-submit" onclick="submitQuiz('soil')">Submit Quiz</button>
+        </form>
+    </div>
+
+
+    <div class="quiz-content" id="session-quiz">
+        <div class="quiz-timer" id="session-timer">Time Left: <span id="session-time">120</span> seconds</div>
+        <form id="session-form">
+            <!-- Quiz Questions -->
+            <div class="quiz-question">
+                <div class = "quiz_div" id="session-quiz">
+                    <h3>Session quiz</h3>
+                    <form id="session-quiz">
+                        <p>1. Which crop is best harvested in summer?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q1" value="A"> Wheat</li>
+                            <li><input type="radio" name="q1" value="B"> Rice</li>
+                            <li><input type="radio" name="q1" value="C"> Barley</li>
+                        </ul>
+
+                        <p>2. What crop is ideal for winter harvest?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q2" value="A"> Corn</li>
+                            <li><input type="radio" name="q2" value="B"> Potatoes</li>
+                            <li><input type="radio" name="q2" value="C"> Soybeans</li>
+                        </ul>
+
+                        <p>3. Which crop is suitable for spring planting?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q3" value="A"> Sunflowers</li>
+                            <li><input type="radio" name="q3" value="B"> Wheat</li>
+                            <li><input type="radio" name="q3" value="C"> Rice</li>
+                        </ul>
+
+                    
+                        <p>4. What is the best crop for rainy conditions?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q4" value="A"> Maize</li>
+                            <li><input type="radio" name="q4" value="B"> Cotton</li>
+                            <li><input type="radio" name="q4" value="C"> Lentils</li>
+                        </ul>
+                    
+
+                    
+                        <p>5. Which crop thrives in dry conditions?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q5" value="A"> Sugarcane</li>
+                            <li><input type="radio" name="q5" value="B"> Beans</li>
+                            <li><input type="radio" name="q5" value="C"> Rice</li>
+                        </ul>
+                    
+
+                    
+                        <p>6. What crop is often harvested in fall?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q6" value="A"> Sorghum</li>
+                            <li><input type="radio" name="q6" value="B"> Barley</li>
+                            <li><input type="radio" name="q6" value="C"> Rice</li>
+                        </ul>
+                    
+
+                    
+                        <p>7. Which crop requires a lot of sunlight?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q7" value="A"> Potatoes</li>
+                            <li><input type="radio" name="q7" value="B"> Sunflowers</li>
+                            <li><input type="radio" name="q7" value="C"> Onions</li>
+                        </ul>
+                    
+
+                        <p>8. What is a winter-hardy crop?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q8" value="A"> Peas</li>
+                            <li><input type="radio" name="q8" value="B"> Corn</li>
+                            <li><input type="radio" name="q8" value="C"> Cotton</li>
+                        </ul>
+                    
+
+                        <p>9. Which crop is best for humid environments?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q9" value="A"> Soybeans</li>
+                            <li><input type="radio" name="q9" value="B"> Grapes</li>
+                            <li><input type="radio" name="q9" value="C"> Lettuce</li>
+                        </ul>
+
+                        <p>10. What crop is ideal for coastal regions?</p>
+                        <ul class="quiz-options">
+                            <li><input type="radio" name="q10" value="A"> Seaweed</li>
+                            <li><input type="radio" name="q10" value="B"> Rice</li>
+                            <li><input type="radio" name="q10" value="C"> Wheat</li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            <button type="button" class="quiz-submit" onclick="submitQuiz('session')">Submit Quiz</button>
+        </from>
+    </div>
+           
+    <!-- Repeat similar structure for other quizzes -->
+
+    <!-- Result Box -->
+    <div class="result-box" id="result-box">
+        <h2>Well Done!</h2>
+        <p>Your quiz has been submitted. Check your score below!</p>
+        <p id="result-score"></p>
+        <button onclick="closeResult()">Close</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Farm Smart. All Rights Reserved.</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+    </footer>
+
+    <script>
+       const correctAnswers = {
+    harvesting: {
+        q1: 'D', q2: 'C', q3: 'D', q4: 'C', q5: 'C',
+        q6: 'B', q7: 'C', q8: 'B', q9: 'C', q10: 'C'
+    },
+    fields: {
+        q1: "D", q2: "D", q3: "A", q4: "B", q5: "A",
+        q6: "A", q7: "B", q8: "C", q9: "B", q10: "B"
+    },
+    tools: {
+        q1: "B", q2: "B", q3: "B", q4: "A", q5: "A",
+        q6: "B", q7: "A", q8: "A", q9: "A", q10: "A"
+    },
+    weather: {
+        q1: "A", q2: "A", q3: "A", q4: "B", q5: "A",
+        q6: "C", q7: "C", q8: "A", q9: "A", q10: "A"
+    },
+    soil: {
+        q1: "A", q2: "A", q3: "A", q4: "A", q5: "A",
+        q6: "C", q7: "C", q8: "A", q9: "A", q10: "A"
+    },
+    session: {
+        q1: "C", q2: "B", q3: "B", q4: "A", q5: "B",
+        q6: "A", q7: "B", q8: "A", q9: "A", q10: "A"
+    }
+    // Define correct answers for other quizzes similarly
+};
+
+// Global variable for storing timer intervals
+let timerIntervals = {};
+
+// Function to start a specific quiz
+function startQuiz(quizId) {
+    // Hide all quiz boxes
+    document.querySelectorAll('.quiz-box').forEach(box => box.style.display = 'none');
+    
+    // Show the selected quiz content
+    document.getElementById(`${quizId}-quiz`).style.display = 'block';
+
+    // Reset form
+    const form = document.getElementById(`${quizId}-form`);
+    form.reset();
+
+    // Reset timer
+    let timeLeft = 120;
+    const timerElement = document.getElementById(`${quizId}-time`);
+    timerElement.textContent = timeLeft;
+
+    // Clear any previous timer
+    if (timerIntervals[quizId]) {
+        clearInterval(timerIntervals[quizId]);
+    }
+
+    // Start new timer
+    timerIntervals[quizId] = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerIntervals[quizId]);
+            submitQuiz(quizId);
+        }
+    }, 1000);
+}
+
+// Function to submit the quiz
+function submitQuiz(quizId) {
+    // Get the user's answers
+    const form = document.getElementById(`${quizId}-form`);
+    const formData = new FormData(form);
+    const userAnswers = {};
+    formData.forEach((value, key) => {
+        userAnswers[key] = value;
+    });
+
+    // Calculate the score
+    const answers = correctAnswers[quizId];
+    let score = 0;
+    for (const [question, correctAnswer] of Object.entries(answers)) {
+        if (userAnswers[question] === correctAnswer) {
+            score += 10; // Assuming each question is worth 10 points
+        }
+    }
+
+    // Hide quiz content and show result box
+    document.getElementById(`${quizId}-quiz`).style.display = 'none';
+    const resultBox = document.getElementById('result-box');
+    resultBox.style.display = 'block';
+    document.getElementById('result-score').textContent = `Score: ${score}/100`;
+}
+
+// Function to close the result box and reset quiz
+function closeResult() {
+    // Hide result box
+    document.getElementById('result-box').style.display = 'none';
+
+    // Hide all quiz boxes and show the main quiz selection page
+    document.querySelectorAll('.quiz-box').forEach(box => box.style.display = 'block');
+    document.getElementById('quiz-selection').style.display = 'block'; // Adjust this to your main quiz page ID
+}
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Smart – Revolutionizing Agriculture</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        p {
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #333;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            color: #89f067;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        /* Title & Motto Section */
+        .title-section {
+            
+            background: linear-gradient(90deg, #644ac3, #f326a7);
+            font-size: 4rem;
+            padding: 2rem;
+            
+            text-align: center;
+            color: rgb(21, 10, 10);
+            animation: fade-in 2s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .motto {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: url('static/cbg2.jpg') no-repeat center center fixed;
+            background-size: cover;
+            
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6rem 0;
+            
+        }
+
+        .logo-container img {
+            width: 300px;
+            animation: logo-zoom 3s infinite;
+        }
+
+        @keyframes logo-zoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .description-container {
+            width: 400px;
+            text-align: justify;
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .description-container blockquote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        /* Video Section */
+        .video-container {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            background: url('static/cbg2.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .video-container .hero-video {
+            background:linear-gradient(45deg, #e15e5e, #ebda26);
+            width: 700px;
+            height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: url('static/cbg4.jpg') no-repeat center center fixed;
+            background-size:cover;
+            padding: 4rem 2rem;
+        }
+        .projects-section h2{
+            text-align: center;
+            color: #e10f0f;
+            background: linear-gradient(45deg, #e15e5e, #ebda26);;
+        }
+        .projects-gallery {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .project-item {
+            width: 200px;
+            margin: 1rem;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .project-item:hover {
+            transform: scale(1.05);
+        }
+
+        .project-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .project-item h3 {
+            color: #333;
+        }
+
+        .project-item a {
+            display: block;
+            margin-top: 1rem;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 0.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background-color: #81C784;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .start-quiz-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-quiz-btn:hover {
+            background-color: #66BB6A;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .footer-logo img {
+            width: 80px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 1.5rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-policies {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/quiz">Quiz</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Title & Motto Section -->
+    <section class="title-section">
+        <h1>Farm Smart</h1>
+        <p class="motto">"Empowering Farmers with Smart Technology for a Sustainable Future"</p>
+    </section>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="logo-container">
+            <img src="/static/FARM SMART 3.png" alt="Farm Smart Logo" class="logo">
+        </div>
+        <div class="description-container">
+            <h2>About Farm Smart</h2>
+            <blockquote>
+                "Farming is not just a profession; it's a way of life. Technology helps us nourish our planet while feeding the world."
+            </blockquote>
+            <p>
+                At Farm Smart, we believe in using cutting-edge technology to revolutionize agriculture. 
+                Our platform helps farmers monitor soil health, track weather patterns, and use data-driven 
+                insights to make smart, sustainable decisions. By integrating AI, IoT, and big data, we aim to 
+                enhance productivity while preserving our environment for future generations.
+            </p>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-container">
+        <video controls autoplay muted loop class="hero-video">
+            <source src="/static/FarmSmart.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <h2>Our Projects</h2>
+        <div class="projects-gallery">
+            <div class="project-item">
+                <img src="/static/Language translater.jpg" alt="Project 1">
+                <h3>Language Translator</h3>
+                A Python-based translation app that allows users to translate text between multiple languages, featuring speech recognition and text-to-speech capabilities.
+                <a href="#">Learn More</a>
+            </div>
+            <div class="project-item">
+                <img src="/static/currency converter.jpg" alt="Project 2">
+                <h3>Currency Converter</h3>
+                A user-friendly application that converts currencies in real-time, with an intuitive GUI for quick and accurate exchange rate calculations.<br>Check it now<br>Check Currency
+                <a href="#">Learn More</a>
+            </div>
+            <div class="project-item">
+                <img src="/static/bike.jpg" alt="Project 3">
+                <h3>Old Bike Price Prediction</h3>
+                A machine learning model that predicts the resale price of used bikes by analyzing factors like model, condition, and mileage.
+                <a href="#">Learn More</a>
+            </div>
+            <div class="project-item">
+                <img src="/static/udaan.jpg" alt="Project 4">
+                <h3>Udaan: Passenger Satisfaction</h3>
+                A passenger satisfaction prediction platform for airlines, providing insights into customer experience based on various flight parameters.
+                <a href="#">Learn More</a>
+            </div>
+            <div class="project-item">
+                <img src="/static/FARM SMART.png" alt="Farm Smart Image">
+                <h3>Farm Smart Technology</h3>
+                Revolutionizing the agricultural industry with AI-driven, data-rich insights and sustainable farming techniques to boost productivity.
+                <a href="#">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <h2>Take Our Quiz</h2>
+        <p>Find out how much you know about farming and agriculture technology.</p>
+        <button class="start-quiz-btn">Start the Quiz</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <img src="/static/FARM SMART.png" alt="Farm Smart Footer Logo">
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-policies">
+            &copy; 2024 Farm Smart. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Suggestions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #222;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        /* Title Section */
+        .title-container {
+            text-align: center;
+            margin-top: 100px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .title-container h1 {
+            font-size: 48px;
+            color: #ffdd57;
+        }
+
+        .title-container p {
+            font-size: 22px;
+            font-style: italic;
+            color: #ffe600;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        /* Data Container */
+        .data-container {
+            background: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            width: 45%;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .data-container h3 {
+            color: #007bff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .data-container ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+        }
+
+        .data-container ul li {
+            background-color: #e9ecef;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Suggestions Container */
+        .suggestions-container {
+            background: linear-gradient(135deg, #5aec47, #f82056);
+            color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+            width: 45%;
+            animation: slideInRight 1s ease-in-out;
+        }
+
+        .suggestions-container h2 {
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .suggestions-container ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+        }
+
+        .suggestions-container ul li {
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/suggestion">Enter Data Again</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Title Section -->
+    <div class="title-container">
+        <h1>Suggested Crops</h1>
+        <p>Your personalized recommendations for the best crops to grow!</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Data Container -->
+        <div class="data-container">
+            <h3>Provided Information : </h3>
+            <ul>
+                <li>Nitrogen (N): {{ nitrogen }}</li>
+                <li>Phosphorus (P): {{ phosphorus }}</li>
+                <li>Potassium (K): {{ potassium }}</li>
+                <li>Temperature (°C): {{ temperature }}</li>
+                <li>Humidity (%): {{ humidity }}</li>
+                <li>pH: {{ ph }}</li>
+                <li>Rainfall (mm): {{ rainfall }}</li>
+            </ul>
+        </div>
+
+        <!-- Suggestions Container -->
+        <div class="suggestions-container">
+            <h2>Here are your crop suggestions:</h2>
+            <ul>
+                {% for crop in suggestion_crops %}
+                    <li>{{ crop }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Farm Solution. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

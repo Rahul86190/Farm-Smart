@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem;
+            font-size: 18px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #ffdd57;
+            transform: scale(1.1);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-header h1 {
+            font-size: 48px;
+            color: #fff;
+            margin: 0;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .contact-header p {
+            font-size: 22px;
+            color: #fff;
+            animation: fadeInUp 1s ease-in-out 0.5s;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .form-container h2 {
+            font-size: 32px;
+            color: #ffdd57;
+            margin-bottom: 20px;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+
+        .form-container button {
+            background: #ff7e5f;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background: #feb47b;
+            transform: scale(1.05);
+        }
+
+
+        /* Shapes */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .shape.square {
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .shape.small {
+            width: 100px;
+            height: 100px;
+        }
+
+        .shape.medium {
+            width: 200px;
+            height: 200px;
+        }
+
+        .shape.large {
+            width: 300px;
+            height: 300px;
+        }
+
+        .shape.top-left {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape.bottom-right {
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/quiz">Quiz</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contact Section -->
+    <div class="contact-container">
+        <div class="contact-header">
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you! Drop us a message.</p>
+        </div>
+
+        <div class="form-container">
+            <h2>Get in Touch</h2>
+            <form id="contactForm" action="{{  url_for('contact_info')  }}" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Message -->
+    <div id="message-box" class="message-box"></div>
+        <h3>On clicking send button message will send sutometically .<br>Thank you! We will contact you soon via email.</h3>
+    </div>
+    <!-- Animated Shapes -->
+    <div class="shape small top-left"></div>
+    <div class="shape medium bottom-right"></div>
+    <div class="shape large top-left"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            // Get form data
+            var formData = new FormData(this);
+
+            // Send AJAX request to the backend
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/contact_info', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Show the message box on successful submission
+                    var messageBox = document.getElementById('message-box');
+                    messageBox.style.display = 'block';
+
+                    // Hide the message box after 3 seconds
+                    setTimeout(function() {
+                        messageBox.style.display = 'none';
+                    }, 3000);
+
+                    // Clear the form
+                    document.getElementById('contactForm').reset();
+                } else {
+                    alert('There was a problem with the submission.');
+                }
+            };
+
+            xhr.send(formData);  // Send the form data to the server
+        });
+    </script>
+</body>
+
+</html>

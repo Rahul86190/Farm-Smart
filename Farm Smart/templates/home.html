@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmSmart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('static/cbg3.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-attachment: scroll;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-bottom: 5px solid #28a745;
+            position: relative;
+        }
+
+        header img.logo {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 80px; /* Adjust as needed */
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            font-family: 'Arial Black', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        header p {
+            font-size: 1.8em;
+            margin: 10px 0;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        #crops-section {
+            padding: 60px 20px;
+            /* background: rgba(73, 73, 73, 0.6); */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            
+            max-width: 1200px; /* Decreased size */
+            margin-left: 20px; /* Sticking to left border */
+        }
+
+        #crops-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+            color: #a7285b;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .left-section {
+            width: 65%;
+            padding: 15px;
+            background: rgba(14, 14, 15, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(43, 244, 3, 0.3);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            overflow-y: auto;
+            height: 600px; /* Decreased height */
+        }
+
+        .crop-item {
+            width: 48%;
+            box-sizing: border-box;
+            background: rgba(55, 48, 48, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .crop-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .right-section {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .get-started-btn {
+            background: #28a745;
+            color: #fff;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .get-started-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        #about-container {
+            /* background-image: url('static/cbg6.jpg');
+            background-size:cover; */
+            display: flex;
+            justify-content: space-between;
+            padding: 50px 20px;
+            margin: 20px auto;
+            max-width: 1700px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .left-section, .right-section {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-section {
+            width: 60%;
+            background: rgba(0, 0, 0, 0.6);
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .right-section {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            animation: fadeInRight 1s ease-out;
+            text-align: center;
+        }
+        .right-section img.logo {
+        height: 200px; /* Adjusted size */
+        margin-bottom: 110px; /* Added spacing below the logo */
+        }
+
+        #about-container h2 {
+            font-size: 2.5em;
+            margin: 0 0 20px;
+            color: white;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .left-section p {
+            font-size: 1.2em;
+            color: gold;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+            line-height: 1.5;
+        }
+
+        .more-about-btn, .quiz-btn {
+            height: 20px;
+            background: #28a745;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 10px;
+        }
+
+        .more-about-btn:hover, .quiz-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .short-desc {
+            font-size: 1.2em;
+            margin: 20px;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            color: #333;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .info-boxes-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 50px 0;
+}
+
+.info-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1); /* Transparent background */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.info-box h3 {
+    color: #c91796;
+    margin-bottom: 15px;
+}
+
+.info-box p {
+    color: #000000;
+}
+
+.info-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4);
+    opacity: 0.7;
+    z-index: -1;
+    transition: transform 0.3s ease;
+    transform: skewY(-5deg);
+}
+
+.info-box:hover {
+    transform: translateY(-10px);
+}
+
+.info-box:hover::before {
+    transform: skewY(0deg) scale(1.05);
+}
+
+
+
+
+.testimonials-section {
+    padding: 50px 20px;
+    background: linear-gradient(to bottom right, rgba(98, 247, 29, 0.1), rgba(236, 24, 24, 0.3));
+    text-align: center;
+}
+
+.testimonials-title {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #04ef33;
+}
+
+.testimonials-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial-text {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.testimonial-author img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.testimonial-author p {
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.cta {
+    margin-top: 40px;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background-color: #ff7f50;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+    background-color: #ff6347;
+}
+
+@media (max-width: 768px) {
+    .testimonials-container {
+        flex-direction: column;
+    }
+}
+
+
+
+
+    .footer {
+    background-color: #012621;
+    color: #fff;
+    padding: 40px 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-logo img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.footer-logo address {
+    font-style: normal;
+    line-height: 1.5;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+.footer-section h4 {
+    color: #8ac640;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-bottom: 1px solid #8ac640;
+    padding-bottom: 5px;
+    width: fit-content;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #8ac640;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px; /* Adjust spacing between icons */
+}
+
+.social-icons a {
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent or set specific color */
+}
+
+.social-icons img {
+    width: 24px; /* Adjust size as needed */
+    height: 24px; /* Adjust size as needed */
+}
+
+        .social-icons a:hover {
+            background: #120e0e;
+            transform: scale(1.1);
+        }
+
+        .social-icons a i {
+            margin: 0;
+        }
+.zip-code-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.zip-code-form input {
+    padding: 8px;
+    border: 1px solid #8ac640;
+    border-radius: 3px;
+    margin-right: 5px;
+    color: #012621;
+    background-color: #ffffff;
+    font-size: 14px;
+    width: 100px;
+}
+
+.zip-code-form button {
+    padding: 8px 12px;
+    background-color: #8ac640;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #012621;
+    font-size: 16px;
+}
+
+.zip-code-form button:hover {
+    background-color: #6ea430;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #8ac640;
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #8ac640;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo {
+        text-align: center;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="static/FARM SMART.png" alt="FarmSmart Logo" class="logo"> <!-- Logo added -->
+        <h1>FarmSmart</h1><br>
+        <p>Growing Smarter, Harvesting Better</p>
+    </header>
+
+    <section id="crops-section">
+        <h2>FarmSmart - Cultivating the Future with Insightful Decisions</h2>
+        <div class="container">
+            <div class="left-section">
+                <div class="crop-item">
+                    <h2>Banana</h2>
+                    <img src="static/Banana.jpg" alt="Crop 1">
+                    <p>Bananas are tropical fruits that are widely consumed fresh or used in cooking. They are a major cash crop in many tropical regions.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Barley</h2>
+                    <img src="static/Barley.jpg" alt="Crop 2">
+                    <p>Barley is a versatile grain used for animal feed, brewing beer, and as a health food. It is one of the oldest cultivated grains.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Chickpeas</h2>
+                    <img src="static/Chickpeas.jpg" alt="Crop 3">
+                    <p>Chickpeas are a legume crop rich in protein and commonly used in Middle Eastern and Mediterranean cuisines, such as in hummus.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>corn</h2>
+                    <img src="static/corn.jpg" alt="Crop 4">
+                    <p> Maize is one of the most widely grown crops globally and is used for food, fodder, and biofuel. It’s commonly used in processed foods and animal feed.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Cotton</h2>
+                    <img src="static/Cotton.jpg" alt="Crop 5">
+                    <p> Cotton is a major fiber crop used in the textile industry to produce clothing and fabrics. Cotton plants produce fluffy bolls that are harvested and spun into thread.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Millets</h2>
+                    <img src="static/Millets.jpg" alt="Crop 6">
+                    <p>Millets are a group of small-seeded grasses that are hardy and drought-tolerant, commonly grown in dry areas for food and fodder</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Oats</h2>
+                    <img src="static/Oats.jpg" alt="Crop 7">
+                    <p>Oats are used as a cereal grain and are often consumed as oatmeal or used in baking. They are also grown as livestock feed.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Peanuts</h2>
+                    <img src="static/Peanuts.jpg" alt="Crop 8">
+                    <p>Peanuts are a legume crop that is primarily used for oil production, animal feed, and as a snack. The seeds develop underground, unlike most other crops.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>rice</h2>
+                    <img src="static/rice.jpg" alt="Crop 9">
+                    <p>Rice is a staple food for over half of the world's population. It grows in warm, waterlogged conditions and is commonly cultivated in flooded fields known as paddies.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Sorghum</h2>
+                    <img src="static/Sorghum.jpg" alt="Crop 10">
+                    <p>Sorghum is a drought-resistant cereal grain that is grown for food, fodder, and ethanol production. It is often cultivated in arid regions.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Soybeans</h2>
+                    <img src="static/Soybeans.jpg" alt="Crop 11">
+                    <p>Sugarcane is a tropical grass that is primarily used to produce sugar and ethanol. It is one of the most valuable crops in terms of revenue.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Sugarcane</h2>
+                    <img src="static/Sugarcane.jpg" alt="Crop 12">
+                    <p>Sugarcane is a tropical grass that is primarily used to produce sugar and ethanol. It is one of the most valuable crops in terms of revenue.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>Tomatoes</h2>
+                    <img src="static/Tomatoes.jpg" alt="Crop 13">
+                    <p>Tomatoes are a fruit crop widely used in cooking. They are grown for both fresh consumption and processed into sauces, soups, and juices.</p>
+                </div>
+                <div class="crop-item">
+                    <h2>wheat</h2>
+                    <img src="static/wheat.jpg" alt="Crop 14">
+                    <p>Wheat is a staple cereal grain that is grown in temperate regions around the world. It is used to make flour for bread, pasta, and other products.</p>
+                </div>
+                
+                <div class="crop-item">
+                    <h2>Potatoes</h2>
+                    <img src="static/Potatoes.jpg" alt="Crop 15">
+                    <p> Potatoes are tuber crops and are one of the most important food crops worldwide, used in various culinary dishes.</p>
+                </div>
+            </div>
+            <div class="right-section">
+                <a href="/suggestion" class="get-started-btn">Get Started</button></a>
+            </div>
+        </div>
+    </section>
+
+    <div class="info-boxes-container">
+        <div class="info-box">
+            <h3>1. Timing:</h3>
+            <p>Ensure the crop is harvested at the right time. Harvesting too early or too late can <hr>>>>Consider factors like crop maturity ,  >weather conditions, and market demand.</p>
+        </div>
+        <div class="info-box">
+            <h3>2. Proper Tools and Techniques:</h3>
+            <p>Use the right tools and techniques to harvest crops.<hr> >>>This minimizes damage to the produce >and ensures better quality.</p>
+        </div>
+        <div class="info-box">
+            <h3>3. Handling and Storage:</h3>
+            <p>Handle the harvested crops carefully to avoid bruising or damage.<hr> >>>This might include cooling, drying, and >proper packaging.
+            </p>
+        </div>
+        <div class="info-box">
+            <h3>4. Post-Harvest Processing:</h3>
+            <p>After harvesting, crops may require cleaning, sorting, and processing before sale.<hr> >>>Proper post-harvest processing helps in >maintaining quality and extending shelf life.</p>
+        </div>
+    </div>
+    
+    
+
+    <section id="about-container">
+        <div class="left-section">
+            <h2>About Us</h2>
+            <p>FarmSmart is dedicated to leveraging the power of data to revolutionize farming practices. Our solutions help farmers make better decisions, optimize resources, and increase productivity.
+                <br><br>Learn more about the different types of crops and farming techniques through our interactive quiz and resources
+            </p>
+            <a href="/about" class="more-about-btn">More About Us</a>
+        </div>
+        <div class="right-section">
+            <img src="static/FARM SMART 2.png" alt="Quiz Logo" class="logo"> <!-- Moved Logo -->
+            <a href="/quiz" class="quiz-btn">Start Quiz</a>
+            
+        </div>
+    </section>
+
+
+    <section class="testimonials-section">
+        <h2 class="testimonials-title">What Our Customers Are Saying</h2>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Farm Smart has revolutionized the way I manage my crops. Their service is top-notch!"</p>
+                <div class="testimonial-author">
+                    <img src="/static/customer1.jpg" alt="Customer 1">
+                    <p>John Doe</p>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"The suggestions I received from Farm Smart is outstanding. Highly recommended!"</p>
+                <div class="testimonial-author">
+                    <img src="/static/customer2.jpg" alt="Customer 2">
+                    <p>Jane Smith</p>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Thanks to Farm Smart, my farm's yield has increased significantly! Thanks for services "</p>
+                <div class="testimonial-author">
+                    <img src="/static/customer3.jpg" alt="Customer 3">
+                    <p>Robert Brown</p>
+                </div>
+            </div>
+        </div>
+        <div class="cta">
+            <a href="/experience" class="cta-button">Share Your Experience</a>
+        </div>
+    </section>
+    
+
+
+
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="static/FARM SMART 3.png" alt="Farm Smart Logo">
+                <address>
+                    3005 Rocky Mountain Ave.<br>
+                    Loveland, CO 80538
+                </address>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Partner</h4>
+                <ul>
+                    <li><a href="#">Wholesale</a></li>
+                    <li><a href="#">Suppliers</a></li>
+                    <li><a href="#">Ariba Network Transition</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Insurance</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Statement</a></li>
+                    <li><a href="#">Do Not Sell or Share My Personal Information</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow</h4>
+                <div class="social-icons">
+                    <a href="http://compose email to rahulsaini132005@gmail.com" title="Email">
+                        <img src="/static/email-icon.png" alt="Email" style="width: 24px; height: 24px;">
+                    </a>
+                    <a href="http://linkedin.com/in/rahul-saini-283832290" title="Linkedin">
+                        <img src="/static/linkedin-icon.png" alt="Linkedin" style="width: 24px; height: 24px;">
+                    </a>
+                    <a href="https://github.com/Rahul86190" title="Github">
+                        <img src="/static/github-icon.png" alt="Github" style="width: 24px; height: 24px;">
+                    </a>
+                    
+                </div>
+                
+            </div>
+            <div class="footer-section">
+                <h4>Visit</h4>
+                <div class="zip-code-form">
+                    <input type="text" placeholder="ZIP CODE">
+                    <button type="submit">➔</button>
+                </div>
+                <a href="#">See All Locations</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>©2024 Farm Smart, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    
+</body>
+</html>
